@@ -30,7 +30,7 @@ public final class TutorialTraceLocal extends TraceLocal {
    * Constructor
    */
   public TutorialTraceLocal(Trace trace) {
-    super(trace);
+	  super(Tutorial.SCAN_MARK, trace);
   }
 
 

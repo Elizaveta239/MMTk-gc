@@ -16,7 +16,6 @@ import org.mmtk.plan.*;
 import org.mmtk.policy.MarkSweepSpace;
 import org.mmtk.policy.Space;
 import org.mmtk.utility.heap.VMRequest;
-import org.mmtk.vm.VM;
 import org.vmmagic.pragma.*;
 import org.vmmagic.unboxed.ObjectReference;
 
@@ -35,6 +34,7 @@ public class Tutorial extends StopTheWorld {
   /**
    *
    */
+	public static final int SCAN_MARK = 0;
   public static final MarkSweepSpace msSpace = new MarkSweepSpace("mark-sweep", VMRequest.create());
   //public static final ImmortalSpace msSpace = new ImmortalSpace("mark-sweep", VMRequest.create());
   public static final int MARK_SWEEP = msSpace.getDescriptor();
@@ -110,6 +110,7 @@ public class Tutorial extends StopTheWorld {
   @Override
   protected void registerSpecializedMethods() {
     super.registerSpecializedMethods();
+    TransitiveClosure.registerSpecializedScan(SCAN_MARK, TutorialTraceLocal.class);
   }
 
   @Override

@@ -31,4 +31,6 @@ public class TutorialConstraints extends StopTheWorldConstraints {
   public int gcHeaderWords() { return MarkSweepSpace.GC_HEADER_WORDS_REQUIRED; }
   @Override
   public int maxNonLOSDefaultAllocBytes() { return SegregatedFreeListSpace.MAX_FREELIST_OBJECT_BYTES; }
+  @Override
+  public int numSpecializedScans() { return 1; }
 }
