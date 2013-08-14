@@ -66,4 +66,9 @@ public abstract class StopTheWorld extends Simple {
       replacePhase(Phase.schedulePlaceholder(POST_SANITY_PLACEHOLDER), Phase.scheduleComplex(postSanityPhase));
     }
   }
+
+public int getPagesRequired() {
+	// TODO Auto-generated method stub
+	return 0;
+}
 }

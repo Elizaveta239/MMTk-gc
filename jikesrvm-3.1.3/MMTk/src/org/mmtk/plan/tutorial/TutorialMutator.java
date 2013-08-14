@@ -12,12 +12,11 @@
  */
 package org.mmtk.plan.tutorial;
 
-import org.mmtk.plan.MutatorContext;
-import org.mmtk.policy.ImmortalLocal;
+import org.mmtk.plan.StopTheWorldMutator;
+import org.mmtk.plan.marksweep.MS;
+import org.mmtk.policy.MarkSweepLocal;
 import org.mmtk.policy.Space;
 import org.mmtk.utility.alloc.Allocator;
-import org.mmtk.vm.VM;
-
 import org.vmmagic.pragma.*;
 import org.vmmagic.unboxed.*;
 
@@ -37,7 +36,7 @@ import org.vmmagic.unboxed.*;
  * @see org.mmtk.plan.MutatorContext
  */
 @Uninterruptible
-public class TutorialMutator extends MutatorContext {
+public class TutorialMutator extends StopTheWorldMutator {
 
   /************************************************************************
    * Instance fields
@@ -46,7 +45,7 @@ public class TutorialMutator extends MutatorContext {
   /**
    *
    */
-  private final ImmortalLocal nogc = new ImmortalLocal(Tutorial.noGCSpace);
+  private final MarkSweepLocal ms = new MarkSweepLocal(Tutorial.msSpace);
 
 
   /****************************************************************************
@@ -60,7 +59,7 @@ public class TutorialMutator extends MutatorContext {
   @Override
   public Address alloc(int bytes, int align, int offset, int allocator, int site) {
     if (allocator == Tutorial.ALLOC_DEFAULT) {
-      return nogc.alloc(bytes, align, offset);
+      return ms.alloc(bytes, align, offset);
     }
     return super.alloc(bytes, align, offset, allocator, site);
   }
@@ -69,14 +68,16 @@ public class TutorialMutator extends MutatorContext {
   @Override
   public void postAlloc(ObjectReference ref, ObjectReference typeRef,
       int bytes, int allocator) {
-    if (allocator != Tutorial.ALLOC_DEFAULT) {
-      super.postAlloc(ref, typeRef, bytes, allocator);
-    }
+	  if (allocator == Tutorial.ALLOC_DEFAULT) {
+		  Tutorial.msSpace.postAlloc(ref);
+	  } else {
+        super.postAlloc(ref, typeRef, bytes, allocator);
+	  }
   }
 
   @Override
   public Allocator getAllocatorFromSpace(Space space) {
-    if (space == Tutorial.noGCSpace) return nogc;
+    if (space == Tutorial.msSpace) return ms;
     return super.getAllocatorFromSpace(space);
   }
 
@@ -91,14 +92,19 @@ public class TutorialMutator extends MutatorContext {
   @Inline
   @Override
   public final void collectionPhase(short phaseId, boolean primary) {
-    VM.assertions.fail("GC Triggered in NoGC Plan.");
-    /*
-     if (phaseId == NoGC.PREPARE) {
-     }
+    //VM.assertions.fail("GC Triggered in NoGC Plan.");
+	  if (phaseId == MS.PREPARE) {
+		  super.collectionPhase(phaseId, primary);
+		  ms.prepare();
+		  return;
+		}
 
-     if (phaseId == NoGC.RELEASE) {
-     }
+	  if (phaseId == MS.RELEASE) {
+		  ms.release();
+		  super.collectionPhase(phaseId, primary);
+		  return;
+		}
+	  
      super.collectionPhase(phaseId, primary);
-     */
   }
 }

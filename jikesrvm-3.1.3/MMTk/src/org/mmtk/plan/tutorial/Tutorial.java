@@ -13,11 +13,12 @@
 package org.mmtk.plan.tutorial;
 
 import org.mmtk.plan.*;
-import org.mmtk.policy.ImmortalSpace;
+import org.mmtk.policy.MarkSweepSpace;
+import org.mmtk.policy.Space;
 import org.mmtk.utility.heap.VMRequest;
 import org.mmtk.vm.VM;
-
 import org.vmmagic.pragma.*;
+import org.vmmagic.unboxed.ObjectReference;
 
 
 /**
@@ -25,7 +26,7 @@ import org.vmmagic.pragma.*;
  * without a collector.
  */
 @Uninterruptible
-public class Tutorial extends Plan {
+public class Tutorial extends StopTheWorld {
 
   /*****************************************************************************
    * Class variables
@@ -34,8 +35,9 @@ public class Tutorial extends Plan {
   /**
    *
    */
-  public static final ImmortalSpace noGCSpace = new ImmortalSpace("default", VMRequest.create());
-  public static final int NOGC = noGCSpace.getDescriptor();
+  public static final MarkSweepSpace msSpace = new MarkSweepSpace("mark-sweep", VMRequest.create());
+  //public static final ImmortalSpace msSpace = new ImmortalSpace("mark-sweep", VMRequest.create());
+  public static final int MARK_SWEEP = msSpace.getDescriptor();
 
 
   /*****************************************************************************
@@ -45,7 +47,7 @@ public class Tutorial extends Plan {
   /**
    *
    */
-  public final Trace trace = new Trace(metaDataSpace);
+  public final Trace msTrace = new Trace(metaDataSpace);
 
 
   /*****************************************************************************
@@ -58,17 +60,29 @@ public class Tutorial extends Plan {
   @Inline
   @Override
   public final void collectionPhase(short phaseId) {
-    if (VM.VERIFY_ASSERTIONS) VM.assertions._assert(false);
-    /*
-    if (phaseId == PREPARE) {
-    }
-    if (phaseId == CLOSURE) {
-    }
-    if (phaseId == RELEASE) {
-    }
+    //if (VM.VERIFY_ASSERTIONS) VM.assertions._assert(false);
+    
+	  if (phaseId == PREPARE) {
+		  super.collectionPhase(phaseId);
+		  msTrace.prepare();
+		  msSpace.prepare(true);
+		  return;
+		}
+	  if (phaseId == CLOSURE) {
+		  msTrace.prepare();
+		  return;
+		}
+	  if (phaseId == RELEASE) {
+		  msTrace.release();
+		  msSpace.release();
+		  super.collectionPhase(phaseId);
+		  return;
+		}
     super.collectionPhase(phaseId);
-    */
+    
   }
+  
+  
 
   /*****************************************************************************
    * Accounting
@@ -81,7 +95,7 @@ public class Tutorial extends Plan {
    */
   @Override
   public int getPagesUsed() {
-    return (noGCSpace.reservedPages() + super.getPagesUsed());
+    return (msSpace.reservedPages() + super.getPagesUsed());
   }
 
 
@@ -96,5 +110,12 @@ public class Tutorial extends Plan {
   @Override
   protected void registerSpecializedMethods() {
     super.registerSpecializedMethods();
+  }
+
+  @Override
+  public boolean willNeverMove(ObjectReference object) {
+    if (Space.isInSpace(MARK_SWEEP, object))
+      return true;
+    return super.willNeverMove(object);
   }
 }

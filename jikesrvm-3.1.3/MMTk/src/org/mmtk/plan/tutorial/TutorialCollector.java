@@ -32,7 +32,7 @@ import org.vmmagic.pragma.*;
  * @see CollectorContext
  */
 @Uninterruptible
-public class TutorialCollector extends ParallelCollector {
+public class TutorialCollector extends StopTheWorldCollector {
 
   /************************************************************************
    * Instance fields
@@ -41,7 +41,7 @@ public class TutorialCollector extends ParallelCollector {
   /**
    *
    */
-  private final TutorialTraceLocal trace = new TutorialTraceLocal(global().trace);
+  private final TutorialTraceLocal trace = new TutorialTraceLocal(global().msTrace);
   protected final TraceLocal currentTrace = trace;
 
 
@@ -52,27 +52,33 @@ public class TutorialCollector extends ParallelCollector {
   /**
    * Perform a garbage collection
    */
-  @Override
+  /*@Override
   public final void collect() {
     VM.assertions.fail("GC Triggered in NoGC Plan. Is -X:gc:ignoreSystemGC=true ?");
-  }
+  }*/
 
   @Inline
   @Override
   public final void collectionPhase(short phaseId, boolean primary) {
-    VM.assertions.fail("GC Triggered in NoGC Plan.");
-    /*
-    if (phaseId == NoGC.PREPARE) {
-    }
+    //VM.assertions.fail("GC Triggered in NoGC Plan.");
+	  if (phaseId == Tutorial.PREPARE) {
+		  super.collectionPhase(phaseId, primary);
+		  trace.prepare();
+		  return;
+		}
 
-    if (phaseId == NoGC.CLOSURE) {
-    }
+	  if (phaseId == Tutorial.CLOSURE) {
+		  trace.completeTrace();
+		  return;
+		}
 
-    if (phaseId == NoGC.RELEASE) {
-    }
+	  if (phaseId == Tutorial.RELEASE) {
+		  trace.release();
+		  super.collectionPhase(phaseId, primary);
+		  return;
+		}
 
     super.collectionPhase(phaseId, primary);
-    */
   }
 
   /****************************************************************************

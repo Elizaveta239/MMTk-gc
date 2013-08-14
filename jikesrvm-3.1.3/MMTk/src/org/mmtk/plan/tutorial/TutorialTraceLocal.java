@@ -43,8 +43,8 @@ public final class TutorialTraceLocal extends TraceLocal {
    */
   public boolean isLive(ObjectReference object) {
     if (object.isNull()) return false;
-    if (Space.isInSpace(Tutorial.NOGC, object)) {
-      return Tutorial.noGCSpace.isLive(object);
+    if (Space.isInSpace(Tutorial.MARK_SWEEP, object)) {
+      return Tutorial.msSpace.isLive(object);
     }
     return super.isLive(object);
   }
@@ -53,8 +53,8 @@ public final class TutorialTraceLocal extends TraceLocal {
   @Override
   public ObjectReference traceObject(ObjectReference object) {
     if (object.isNull()) return object;
-    if (Space.isInSpace(Tutorial.NOGC, object))
-      return Tutorial.noGCSpace.traceObject(this, object);
+    if (Space.isInSpace(Tutorial.MARK_SWEEP, object))
+      return Tutorial.msSpace.traceObject(this, object);
     return super.traceObject(object);
   }
 }
