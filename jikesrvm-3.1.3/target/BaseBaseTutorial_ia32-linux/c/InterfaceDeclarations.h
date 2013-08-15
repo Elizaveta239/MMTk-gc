@@ -426,11 +426,11 @@ static const int FileSystem_STAT_IS_WRITABLE                 = 4;
 static const int FileSystem_STAT_LAST_MODIFIED                 = 5;
 static const int FileSystem_STAT_LENGTH                 = 6;
 static const int MMTk_Constants_BYTES_IN_PAGE            = 4096;
-const Offset RVMThread_stack_offset = 0x00000040;
-const Offset RVMThread_stackLimit_offset = 0x000000d8;
-const Offset RVMThread_exceptionRegisters_offset = 0x00000054;
-const Offset RVMThread_jniEnv_offset = 0x0000006c;
-const Offset RVMThread_execStatus_offset = 0x000000b4;
+const Offset RVMThread_stack_offset = 0x00000044;
+const Offset RVMThread_stackLimit_offset = 0x000000dc;
+const Offset RVMThread_exceptionRegisters_offset = 0x00000058;
+const Offset RVMThread_jniEnv_offset = 0x00000070;
+const Offset RVMThread_execStatus_offset = 0x000000b8;
 static const int RVMThread_TERMINATED = 7;
 const Offset Registers_gprs_offset = 0xfffffffc;
 const Offset Registers_fprs_offset = 0x00000000;
@@ -449,8 +449,8 @@ static const int Constants_EDI                    = 7;
 static const int Constants_STACKFRAME_BODY_OFFSET             = -8;
 static const int Constants_STACKFRAME_RETURN_ADDRESS_OFFSET   = 4;
 static const int Constants_RVM_TRAP_BASE  = 64;
-const Offset Thread_framePointer_offset = 0x000000dc;
-const Offset Thread_arrayIndexTrapParam_offset = 0x000000e4;
+const Offset Thread_framePointer_offset = 0x000000e0;
+const Offset Thread_arrayIndexTrapParam_offset = 0x000000e8;
 static const int ArchConstants_SSE2 = 1;
 #endif /* NEED_VIRTUAL_MACHINE_DECLARATIONS */
 

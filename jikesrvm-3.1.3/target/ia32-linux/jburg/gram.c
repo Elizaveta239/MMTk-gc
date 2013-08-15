@@ -66,7 +66,7 @@
 /* Copy the first part of user declarations.  */
 
 /* Line 268 of yacc.c  */
-#line 1 "/home/elizabeth/sum13/ideal/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
+#line 1 "/home/elizabeth/sum13/ideal/MMTk-gc/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
 
 /*
  * (C) Copyright IBM Corp. 2001
@@ -79,7 +79,7 @@ static int yylex(void);
 
 
 /* Line 268 of yacc.c  */
-#line 83 "/home/elizabeth/sum13/ideal/jikesrvm-3.1.3/target/ia32-linux/jburg/gram.c"
+#line 83 "/home/elizabeth/sum13/ideal/MMTk-gc/jikesrvm-3.1.3/target/ia32-linux/jburg/gram.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -123,7 +123,7 @@ typedef union YYSTYPE
 {
 
 /* Line 293 of yacc.c  */
-#line 11 "/home/elizabeth/sum13/ideal/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
+#line 11 "/home/elizabeth/sum13/ideal/MMTk-gc/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
 
 	int n;
 	char *string;
@@ -132,7 +132,7 @@ typedef union YYSTYPE
 
 
 /* Line 293 of yacc.c  */
-#line 136 "/home/elizabeth/sum13/ideal/jikesrvm-3.1.3/target/ia32-linux/jburg/gram.c"
+#line 136 "/home/elizabeth/sum13/ideal/MMTk-gc/jikesrvm-3.1.3/target/ia32-linux/jburg/gram.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -144,7 +144,7 @@ typedef union YYSTYPE
 
 
 /* Line 343 of yacc.c  */
-#line 148 "/home/elizabeth/sum13/ideal/jikesrvm-3.1.3/target/ia32-linux/jburg/gram.c"
+#line 148 "/home/elizabeth/sum13/ideal/MMTk-gc/jikesrvm-3.1.3/target/ia32-linux/jburg/gram.c"
 
 #ifdef short
 # undef short
@@ -1386,21 +1386,21 @@ yyreduce:
         case 2:
 
 /* Line 1806 of yacc.c  */
-#line 25 "/home/elizabeth/sum13/ideal/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
+#line 25 "/home/elizabeth/sum13/ideal/MMTk-gc/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
     { yylineno = 0; }
     break;
 
   case 3:
 
 /* Line 1806 of yacc.c  */
-#line 26 "/home/elizabeth/sum13/ideal/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
+#line 26 "/home/elizabeth/sum13/ideal/MMTk-gc/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
     { yylineno = 0; }
     break;
 
   case 7:
 
 /* Line 1806 of yacc.c  */
-#line 34 "/home/elizabeth/sum13/ideal/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
+#line 34 "/home/elizabeth/sum13/ideal/MMTk-gc/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
     {
 		if (nonterm((yyvsp[(2) - (3)].string))->number != 1)
 			yyerror("redeclaration of the start symbol\n");
@@ -1410,70 +1410,70 @@ yyreduce:
   case 9:
 
 /* Line 1806 of yacc.c  */
-#line 39 "/home/elizabeth/sum13/ideal/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
+#line 39 "/home/elizabeth/sum13/ideal/MMTk-gc/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
     { yyerrok; }
     break;
 
   case 11:
 
 /* Line 1806 of yacc.c  */
-#line 43 "/home/elizabeth/sum13/ideal/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
+#line 43 "/home/elizabeth/sum13/ideal/MMTk-gc/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
     { term((yyvsp[(2) - (4)].string), (yyvsp[(4) - (4)].n)); }
     break;
 
   case 13:
 
 /* Line 1806 of yacc.c  */
-#line 47 "/home/elizabeth/sum13/ideal/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
+#line 47 "/home/elizabeth/sum13/ideal/MMTk-gc/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
     { rule((yyvsp[(2) - (7)].string), (yyvsp[(4) - (7)].tree), "", (yyvsp[(6) - (7)].string)); }
     break;
 
   case 15:
 
 /* Line 1806 of yacc.c  */
-#line 49 "/home/elizabeth/sum13/ideal/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
+#line 49 "/home/elizabeth/sum13/ideal/MMTk-gc/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
     { yyerrok; }
     break;
 
   case 16:
 
 /* Line 1806 of yacc.c  */
-#line 52 "/home/elizabeth/sum13/ideal/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
+#line 52 "/home/elizabeth/sum13/ideal/MMTk-gc/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
     { nonterm((yyval.string) = (yyvsp[(1) - (1)].string)); }
     break;
 
   case 17:
 
 /* Line 1806 of yacc.c  */
-#line 55 "/home/elizabeth/sum13/ideal/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
+#line 55 "/home/elizabeth/sum13/ideal/MMTk-gc/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
     { (yyval.tree) = tree((yyvsp[(1) - (1)].string),  0,  0); }
     break;
 
   case 18:
 
 /* Line 1806 of yacc.c  */
-#line 56 "/home/elizabeth/sum13/ideal/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
+#line 56 "/home/elizabeth/sum13/ideal/MMTk-gc/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
     { (yyval.tree) = tree((yyvsp[(1) - (4)].string), (yyvsp[(3) - (4)].tree),  0); }
     break;
 
   case 19:
 
 /* Line 1806 of yacc.c  */
-#line 57 "/home/elizabeth/sum13/ideal/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
+#line 57 "/home/elizabeth/sum13/ideal/MMTk-gc/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
     { (yyval.tree) = tree((yyvsp[(1) - (6)].string), (yyvsp[(3) - (6)].tree), (yyvsp[(5) - (6)].tree)); }
     break;
 
   case 20:
 
 /* Line 1806 of yacc.c  */
-#line 60 "/home/elizabeth/sum13/ideal/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
+#line 60 "/home/elizabeth/sum13/ideal/MMTk-gc/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
     { if (*(yyvsp[(1) - (1)].string) == 0) (yyval.string) = xstrdup("0"); }
     break;
 
 
 
 /* Line 1806 of yacc.c  */
-#line 1477 "/home/elizabeth/sum13/ideal/jikesrvm-3.1.3/target/ia32-linux/jburg/gram.c"
+#line 1477 "/home/elizabeth/sum13/ideal/MMTk-gc/jikesrvm-3.1.3/target/ia32-linux/jburg/gram.c"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1704,7 +1704,7 @@ yyreturn:
 
 
 /* Line 2067 of yacc.c  */
-#line 62 "/home/elizabeth/sum13/ideal/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
+#line 62 "/home/elizabeth/sum13/ideal/MMTk-gc/jikesrvm-3.1.3/rvm/src-generated/opt-burs/jburg/gram.y"
 
 #include <assert.h>
 #include <stdarg.h>
