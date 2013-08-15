@@ -1,8 +1,8 @@
 MMTk-gc
 =======
 
-This code was written with MMTk Tutorial. This tutorial will build up a sophisticated garbage collector from scratch.
-MMTk was build with two collectors:
+This code was written with MMTk Tutorial(http://jikesrvm.org/MMTk+Tutorial). This tutorial will build up a 
+sophisticated garbage collector from scratch. MMTk was build with two collectors:
 
 1. Mark-Sweep Collector,
 2. Hybrid Copying/Mark-Sweep Collector.
