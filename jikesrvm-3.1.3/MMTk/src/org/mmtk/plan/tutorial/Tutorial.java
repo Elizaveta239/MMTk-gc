@@ -13,6 +13,7 @@
 package org.mmtk.plan.tutorial;
 
 import org.mmtk.plan.*;
+import org.mmtk.policy.CopySpace;
 import org.mmtk.policy.MarkSweepSpace;
 import org.mmtk.policy.Space;
 import org.mmtk.utility.heap.VMRequest;
@@ -61,25 +62,24 @@ public class Tutorial extends StopTheWorld {
   @Override
   public final void collectionPhase(short phaseId) {
     //if (VM.VERIFY_ASSERTIONS) VM.assertions._assert(false);
-    
-	  if (phaseId == PREPARE) {
-		  super.collectionPhase(phaseId);
-		  msTrace.prepare();
-		  msSpace.prepare(true);
-		  return;
-		}
-	  if (phaseId == CLOSURE) {
-		  msTrace.prepare();
-		  return;
-		}
-	  if (phaseId == RELEASE) {
-		  msTrace.release();
-		  msSpace.release();
-		  super.collectionPhase(phaseId);
-		  return;
-		}
+    if (phaseId == PREPARE) {
+    	super.collectionPhase(phaseId);
+    	nurserySpace.prepare(true);
+    	msTrace.prepare();
+    	msSpace.prepare(true);
+    	return;
+    }
+    if (phaseId == CLOSURE) {
+    	msTrace.prepare();
+    	return;
+    }
+    if (phaseId == RELEASE) {
+    	msTrace.release();
+    	nurserySpace.release();
+    	msSpace.release();super.collectionPhase(phaseId);
+    	return;
+    }
     super.collectionPhase(phaseId);
-    
   }
   
   
@@ -95,7 +95,7 @@ public class Tutorial extends StopTheWorld {
    */
   @Override
   public int getPagesUsed() {
-    return (msSpace.reservedPages() + super.getPagesUsed());
+    return (msSpace.reservedPages() + super.getPagesUsed() + nurserySpace.reservedPages());
   }
 
 
@@ -119,4 +119,17 @@ public class Tutorial extends StopTheWorld {
       return true;
     return super.willNeverMove(object);
   }
+  
+  public static final CopySpace nurserySpace = new CopySpace("nursery", false, VMRequest.create(0.15f, true));
+  public static final int NURSERY = nurserySpace.getDescriptor();
+  
+  @Override
+  public int getCollectionReserve() {
+	  return nurserySpace.reservedPages() + super.getCollectionReserve();
+  }
+  @Override
+  public int getPagesAvail(){
+	  return super.getPagesAvail()/2;
+  }
+  
 }

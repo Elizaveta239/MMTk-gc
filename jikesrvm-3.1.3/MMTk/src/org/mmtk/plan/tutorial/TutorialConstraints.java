@@ -29,8 +29,13 @@ public class TutorialConstraints extends StopTheWorldConstraints {
   public int gcHeaderBits() { return  MarkSweepSpace.LOCAL_GC_BITS_REQUIRED; }
   @Override
   public int gcHeaderWords() { return MarkSweepSpace.GC_HEADER_WORDS_REQUIRED; }
-  @Override
+  /*@Override
   public int maxNonLOSDefaultAllocBytes() { return SegregatedFreeListSpace.MAX_FREELIST_OBJECT_BYTES; }
+  */
   @Override
   public int numSpecializedScans() { return 1; }
+  @Override
+  public boolean movesObjects() { return true; }
+  @Override
+  public int maxNonLOSCopyBytes() { return SegregatedFreeListSpace.MAX_FREELIST_OBJECT_BYTES;}
 }

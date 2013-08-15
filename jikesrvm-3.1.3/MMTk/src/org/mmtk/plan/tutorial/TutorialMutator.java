@@ -14,6 +14,7 @@ package org.mmtk.plan.tutorial;
 
 import org.mmtk.plan.StopTheWorldMutator;
 import org.mmtk.plan.marksweep.MS;
+import org.mmtk.policy.CopyLocal;
 import org.mmtk.policy.MarkSweepLocal;
 import org.mmtk.policy.Space;
 import org.mmtk.utility.alloc.Allocator;
@@ -45,8 +46,8 @@ public class TutorialMutator extends StopTheWorldMutator {
   /**
    *
    */
-  private final MarkSweepLocal ms = new MarkSweepLocal(Tutorial.msSpace);
-
+    private final MarkSweepLocal ms = new MarkSweepLocal(Tutorial.msSpace);
+	private final CopyLocal nursery = new CopyLocal(Tutorial.nurserySpace);
 
   /****************************************************************************
    * Mutator-time allocation
@@ -59,7 +60,7 @@ public class TutorialMutator extends StopTheWorldMutator {
   @Override
   public Address alloc(int bytes, int align, int offset, int allocator, int site) {
     if (allocator == Tutorial.ALLOC_DEFAULT) {
-      return ms.alloc(bytes, align, offset);
+      return nursery.alloc(bytes, align, offset);
     }
     return super.alloc(bytes, align, offset, allocator, site);
   }
@@ -68,16 +69,21 @@ public class TutorialMutator extends StopTheWorldMutator {
   @Override
   public void postAlloc(ObjectReference ref, ObjectReference typeRef,
       int bytes, int allocator) {
+	  /*
 	  if (allocator == Tutorial.ALLOC_DEFAULT) {
-		  Tutorial.msSpace.postAlloc(ref);
-	  } else {
-        super.postAlloc(ref, typeRef, bytes, allocator);
+    	Tutorial.msSpace.postAlloc(ref);
+    } else {
+      super.postAlloc(ref, typeRef, bytes, allocator);
+    }
+    */
+	  if (allocator != Tutorial.ALLOC_DEFAULT) {
+		  super.postAlloc(ref, typeRef, bytes, allocator);
 	  }
   }
 
   @Override
   public Allocator getAllocatorFromSpace(Space space) {
-    if (space == Tutorial.msSpace) return ms;
+    if (space == Tutorial.nurserySpace) return nursery;
     return super.getAllocatorFromSpace(space);
   }
 
@@ -95,12 +101,13 @@ public class TutorialMutator extends StopTheWorldMutator {
     //VM.assertions.fail("GC Triggered in NoGC Plan.");
 	  if (phaseId == MS.PREPARE) {
 		  super.collectionPhase(phaseId, primary);
-		  ms.prepare();
+		  //ms.prepare();
+		  nursery.reset();
 		  return;
 		}
 
 	  if (phaseId == MS.RELEASE) {
-		  ms.release();
+		  //ms.release();
 		  super.collectionPhase(phaseId, primary);
 		  return;
 		}

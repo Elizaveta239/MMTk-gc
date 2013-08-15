@@ -46,6 +46,9 @@ public final class TutorialTraceLocal extends TraceLocal {
     if (Space.isInSpace(Tutorial.MARK_SWEEP, object)) {
       return Tutorial.msSpace.isLive(object);
     }
+    if (Space.isInSpace(Tutorial.NURSERY, object)) {
+    	  return Tutorial.nurserySpace.isLive(object);
+    }
     return super.isLive(object);
   }
 
@@ -53,8 +56,27 @@ public final class TutorialTraceLocal extends TraceLocal {
   @Override
   public ObjectReference traceObject(ObjectReference object) {
     if (object.isNull()) return object;
-    if (Space.isInSpace(Tutorial.MARK_SWEEP, object))
+    if (Space.isInSpace(Tutorial.MARK_SWEEP, object)) {
       return Tutorial.msSpace.traceObject(this, object);
+    }
+    if (Space.isInSpace(Tutorial.NURSERY, object)) {
+    	  return Tutorial.nurserySpace.traceObject(this, object, Tutorial.ALLOC_DEFAULT);
+    }
     return super.traceObject(object);
+  }
+  /*
+  @Override
+  public ObjectReference precopyObject(ObjectReference object) {
+    if (object.isNull()) return object;
+    else if (Space.isInSpace(Tutorial.NURSERY, object))
+      return Tutorial.nurserySpace.traceObject(this, object, Tutorial.ALLOC_DEFAULT);
+    else
+      return object;
+  }
+  */
+  
+  @Override
+  public boolean willNotMoveInCurrentCollection(ObjectReference object) {
+    return !Space.isInSpace(Tutorial.NURSERY, object);
   }
 }
